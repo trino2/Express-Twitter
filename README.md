@@ -23,3 +23,13 @@ Once the server is running, open the project in the shape of 'https://projectnam
 
 API Web Resource Library:
 https://www.programmableweb.com
+**************************************************
+app url: https://twitter-critter.herokuapp.com/
+
+**************************************************
+to add changes to the app url
+git add .
+git commit -am "notes here"
+git push heroku master
+
+***************************************************

@@ -1,11 +1,17 @@
 var Twit = require('twit');
-var T = new Twit(require('./config.js'));
+var T = new Twit({
+  consumer_key: process.env.consumer_key,
+  consumer_secret: process.env.consumer_secret,
+  access_token: process.env.access_token,
+  access_token_secret: process.env.access_token_secret,
+  // timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+});
 
 // Debug flag
 var debug = false;
 
 // This is the URL of a search for the latest tweets on the #hashtag.
-var target = { q: '@trinorx7 ', count: 10, result_type: 'recent' };
+var target = { q: '@trinorx7 ', count: 5, result_type: 'recent' };
 
 // This function finds the latest tweet with the #hashtag, and retweets it.
 function retweet () {

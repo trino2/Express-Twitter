@@ -4,8 +4,8 @@ var https = require('https');
 var btoa = require('btoa');
 
 var keys = {
-    client: process.env.TWITTER_CLIENT_ID, 
-    secret: process.env.TWITTER_SECRET_KEY
+    client: process.env.consumer_key, 
+    secret: process.env.consumer_secret
 };
 
 var combined = keys.client + ":" + keys.secret; 
