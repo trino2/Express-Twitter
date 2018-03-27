@@ -12,7 +12,7 @@ var T = new Twit({
 
 function twitterData(sendBackResponseToBrowser) {
     var tweets = '';
-    var target = 'lol';
+    var target = '';
     T.get('search/tweets', { q: target, count: 30 }, function(err, data, response) {
     if (err){
         console.log("This craped the bed: ", err);

@@ -4,12 +4,10 @@ block content
   center
     h1 Welcome To Twitter's Critter
     h3 Hashtag Games Hosting made easy
-    a(href='user') Check Hashtags
-    h4 My latest tweet:
-    blockquote.twitter-tweet(data-lang='en')
-      p(lang='en', dir='ltr')
-        a(href='https://twitter.com/hashtag/ImInTheHallOfFameOf?src=hash&ref_src=twsrc%5Etfw') #ImInTheHallOfFameOf
-        |  making hall's, it goes on forever!
-      | — Keyboard Cowboy (@trinorx7) 
-      a(href='https://twitter.com/trinorx7/status/971872935974547456?ref_src=twsrc%5Etfw') March 8, 2018
-    script(async='', src='https://platform.twitter.com/widgets.js', charset='utf-8')
+    form(action='/user')
+      label(for='hashtagSearch') What is your hashtag game?
+      br
+      input(type='text', placeholder='Current Search: lol', size = 15)
+      input(type='submit', value='Serch Twitter')
+      br
+      br
