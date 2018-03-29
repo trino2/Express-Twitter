@@ -1,10 +1,9 @@
 var Twit = require('twit');
 var express = require('express');
-var serchTarget = require("./index");
 var bodyParser = require('body-parser');
 var router = express.Router();
 
-router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 var T = new Twit({
@@ -14,26 +13,26 @@ var T = new Twit({
     access_token_secret: process.env.access_token_secret,
 });
 
-function twitterData(sendBackResponseToBrowser) {
-    
-    var tweets = '';
-    // make sure to add the # to the variable
-    var target = '#lol';
-    serchTarget;
-    T.get('search/tweets', { q: target}, function(err, data, response) {
+function twitterData(target, sendBackResponseToBrowser) {
+
+
+    var tweetsFound = 0;
+    T.get('search/tweets', { q: target }, function(err, data, response) {
     if (err){
         console.log("This craped the bed: ", err);
     }
     else {
-        tweets = data.statuses;
-        sendBackResponseToBrowser(tweets);
+        var tweets = data.statuses;
+        tweetsFound += tweets.length;
+        sendBackResponseToBrowser(tweets, tweetsFound);
         }
     });
 }
 
 router.get('/', function(req, res, next) {
-    twitterData(function(tweets){
-        res.render('hashtagSerch', { title: 'Hashtag Search', tweets: tweets});
+    var target = req.query.serchTarget;
+    twitterData(target, function(tweets, tweetsFound){
+        res.render('hashtagSerch', { title: 'Hashtag Search', tweets: tweets, tweetsFound: tweetsFound});
     });
 });
 
