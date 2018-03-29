@@ -11,8 +11,8 @@ var hashtagSerch = require('./routes/hashtagSerch');
 
 var app = express();
 
-console.log("Port: " + process.env.PORT); 
-console.log("IP: " + process.env.IP); 
+// console.log("Port: " + process.env.PORT); 
+// console.log("IP: " + process.env.IP); 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

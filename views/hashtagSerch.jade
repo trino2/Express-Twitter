@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  center
-    h1 #{title}
-    br
-    #{tweets}
-    br
+    center
+      h1 #{title}
+      br
+    ul
+      each tweet in tweets
+          li= tweet.text
     br
