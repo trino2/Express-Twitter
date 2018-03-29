@@ -19,6 +19,7 @@ function twitterData(target, sendBackResponseToBrowser) {
     if(testHashtag[1] != '#'){
         target = '#' + target;
     }
+    var advice = 'dd';
     var tweetsFound = 0;
     T.get('search/tweets', { q: target, count: 500}, function(err, data, response) {
     if (err){
@@ -27,15 +28,22 @@ function twitterData(target, sendBackResponseToBrowser) {
     else {
         var tweets = data.statuses;
         tweetsFound += tweets.length;
-        sendBackResponseToBrowser(tweets, tweetsFound);
+        if (tweetsFound < 25){
+            advice = "This is a great Hashtag to Play";
+        }else if (tweetsFound > 25 && tweetsFound < 80) {
+            advice = "Its been used alot before, It could still be fun";
+        }else {
+            advice = "Dont use that Hashtag, its been used to much!";
+        }
+        sendBackResponseToBrowser(target, tweets, tweetsFound, advice);
         }
     });
 }
 
 router.get('/', function(req, res, next) {
     var target = req.query.serchTarget;
-    twitterData(target, function(tweets, tweetsFound){
-        res.render('hashtagSerch', { title: 'Hashtag Search', tweets: tweets, tweetsFound: tweetsFound});
+    twitterData(target, function(hashtag, tweets, tweetsFound, advice){
+        res.render('hashtagSerch', {hashtag: hashtag, tweets: tweets, tweetsFound: tweetsFound, advice: advice});
     });
 });
 

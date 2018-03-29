@@ -2,8 +2,9 @@ extends layout
 
 block content
     center
-      h1 #{title}
-      h2 Tweets found #{tweetsFound}
+      h1 Twitter Hashtag Serch
+      h2 Tweets found for #{hashtag}: #{tweetsFound}
+      h2 #{advice}
     ul
       each tweet in tweets
           li= tweet.text
