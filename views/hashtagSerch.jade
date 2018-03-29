@@ -3,8 +3,7 @@ extends layout
 block content
     center
       h1 #{title}
-      br
+      h2 Tweets found #{tweets.length}
     ul
       each tweet in tweets
           li= tweet.text
-    br

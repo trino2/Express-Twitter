@@ -17,9 +17,10 @@ var T = new Twit({
 function twitterData(sendBackResponseToBrowser) {
     
     var tweets = '';
-    var target = 'lol';
+    // make sure to add the # to the variable
+    var target = '#lol';
     serchTarget;
-    T.get('search/tweets', { q: target, count: 30 }, function(err, data, response) {
+    T.get('search/tweets', { q: target}, function(err, data, response) {
     if (err){
         console.log("This craped the bed: ", err);
     }
