@@ -14,12 +14,15 @@ var T = new Twit({
 });
 
 function twitterData(target, sendBackResponseToBrowser) {
-
-
+    
+    var testHashtag = JSON.stringify(target);
+    if(testHashtag[1] != '#'){
+        target = '#' + target;
+    }
     var tweetsFound = 0;
-    T.get('search/tweets', { q: target }, function(err, data, response) {
+    T.get('search/tweets', { q: target, count: 500}, function(err, data, response) {
     if (err){
-        console.log("This craped the bed: ", err);
+        console.log("This is the Error: ", err);
     }
     else {
         var tweets = data.statuses;
