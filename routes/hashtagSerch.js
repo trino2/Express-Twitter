@@ -19,7 +19,9 @@ function twitterData(target, sendBackResponseToBrowser) {
     if(testHashtag[1] != '#'){
         target = '#' + target;
     }
-    var advice = 'dd';
+    var advice = '';
+    var likeCount = 0;
+    var likeRetweet = 0;
     var tweetsFound = 0;
     T.get('search/tweets', { q: target, count: 500}, function(err, data, response) {
     if (err){
@@ -28,6 +30,7 @@ function twitterData(target, sendBackResponseToBrowser) {
     else {
         var tweets = data.statuses;
         tweetsFound += tweets.length;
+        // console.log('Tweets: ', tweets[0]);
         if (tweetsFound < 25){
             advice = "This is a great Hashtag to Play";
         }else if (tweetsFound > 25 && tweetsFound < 80) {
@@ -35,15 +38,27 @@ function twitterData(target, sendBackResponseToBrowser) {
         }else {
             advice = "Dont use that Hashtag, its been used to much!";
         }
-        sendBackResponseToBrowser(target, tweets, tweetsFound, advice);
+        for (var key in tweets){
+            likeCount += Number(tweets[key].favorite_count);
+            likeRetweet += Number(tweets[key].retweet_count);
+            // console.log('tweet Likes:', tweets[key].favorite_count, likeCount);
+            // console.log('tweet retweets:', tweets[key].retweet_count, likeRetweet);
+        }
+        likeCount = ((likeCount / tweetsFound) * 100).toFixed(1);
+        likeRetweet = ((likeRetweet / tweetsFound) * 100).toFixed(1);
+        // console.log('Like count', likeCount);
+        // console.log("Count of likes", likeRetweet);
+        
+        sendBackResponseToBrowser(likeCount, likeRetweet, target, tweets, tweetsFound, advice);
         }
     });
 }
 
 router.get('/', function(req, res, next) {
     var target = req.query.serchTarget;
-    twitterData(target, function(hashtag, tweets, tweetsFound, advice){
-        res.render('hashtagSerch', {hashtag: hashtag, tweets: tweets, tweetsFound: tweetsFound, advice: advice});
+    twitterData(target, function(likeCount, likeRetweet, hashtag, tweets, tweetsFound, advice){
+        res.render('hashtagSerch', {likeCount: likeCount, likeRetweet: likeRetweet, hashtag: hashtag,
+        tweets: tweets, tweetsFound: tweetsFound, advice: advice});
     });
 });
 
