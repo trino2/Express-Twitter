@@ -14,40 +14,46 @@ var T = new Twit({
 });
 
 function twitterData(target, sendBackResponseToBrowser) {
-    
+    // Value from index page and checks for # and adds it if not found!
     var testHashtag = JSON.stringify(target);
     if(testHashtag[1] != '#'){
         target = '#' + target;
     }
-    var advice = '';
-    var likeCount = 0;
-    var likeRetweet = 0;
-    var tweetsFound = 0;
-    T.get('search/tweets', { q: target, count: 500}, function(err, data, response) {
+    // Gets the actual raw tweets from twitter 
+    T.get('search/tweets', {count: 100}, function(err, data, response) {
+        var tweets = '';
+        var advice = '';
+        var likeCount = 0;
+        var likeRetweet = 0;
+        var tweetsFound = 0;
     if (err){
+        // If a error hapes this will dysplay something to cite
         console.log("This is the Error: ", err);
+        tweets = { text: 'Not tweets found!' };
+        advice = 'Twitter is not responding!';
+        
+        sendBackResponseToBrowser(likeCount, likeRetweet, target, tweets, tweetsFound, advice);
     }
     else {
-        var tweets = data.statuses;
+        // Gets only the tweets data
+        tweets = data.statuses;
         tweetsFound += tweets.length;
-        // console.log('Tweets: ', tweets[0]);
-        if (tweetsFound < 25){
-            advice = "This is a great Hashtag to Play";
+        // Running adding tootal will display one of 3 options bellow
+        if (tweetsFound < 25 && tweetsFound != 0){
+            advice = 'This is a great Hashtag to Play';
         }else if (tweetsFound > 25 && tweetsFound < 80) {
             advice = "Its been used alot before, It could still be fun";
         }else {
             advice = "Dont use that Hashtag, its been used to much!";
         }
+        // Gets just the likes and retweets from all the tweets found add total
         for (var key in tweets){
             likeCount += Number(tweets[key].favorite_count);
             likeRetweet += Number(tweets[key].retweet_count);
-            // console.log('tweet Likes:', tweets[key].favorite_count, likeCount);
-            // console.log('tweet retweets:', tweets[key].retweet_count, likeRetweet);
         }
+        // Uses data calculated and sets the % of the likes and retweets found
         likeCount = ((likeCount / tweetsFound) * 100).toFixed(1);
         likeRetweet = ((likeRetweet / tweetsFound) * 100).toFixed(1);
-        // console.log('Like count', likeCount);
-        // console.log("Count of likes", likeRetweet);
         
         sendBackResponseToBrowser(likeCount, likeRetweet, target, tweets, tweetsFound, advice);
         }
