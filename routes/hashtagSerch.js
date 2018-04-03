@@ -20,7 +20,7 @@ function twitterData(target, sendBackResponseToBrowser) {
         target = '#' + target;
     }
     // Gets the actual raw tweets from twitter 
-    T.get('search/tweets', {count: 100}, function(err, data, response) {
+    T.get('search/tweets', {q: target, count: 200}, function(err, data, response) {
         var tweets = '';
         var advice = '';
         var likeCount = 0;
@@ -52,18 +52,19 @@ function twitterData(target, sendBackResponseToBrowser) {
             likeRetweet += Number(tweets[key].retweet_count);
         }
         // Uses data calculated and sets the % of the likes and retweets found
-        likeCount = ((likeCount / tweetsFound) * 100).toFixed(1);
-        likeRetweet = ((likeRetweet / tweetsFound) * 100).toFixed(1);
+        var likePercentCount = ((likeCount / tweetsFound) * 100).toFixed(1);
+        var likePercentRetweet = ((likeRetweet / tweetsFound) * 100).toFixed(1);
         
-        sendBackResponseToBrowser(likeCount, likeRetweet, target, tweets, tweetsFound, advice);
+        sendBackResponseToBrowser(likePercentCount, likePercentRetweet, likeCount, 
+        likeRetweet, target, tweets, tweetsFound, advice);
         }
     });
 }
 
 router.get('/', function(req, res, next) {
     var target = req.query.serchTarget;
-    twitterData(target, function(likeCount, likeRetweet, hashtag, tweets, tweetsFound, advice){
-        res.render('hashtagSerch', {likeCount: likeCount, likeRetweet: likeRetweet, hashtag: hashtag,
+    twitterData(target, function(likePercentCount, likePercentRetweet, likeCount, likeRetweet, hashtag, tweets, tweetsFound, advice){
+        res.render('hashtagSerch', {likePercentCount: likePercentCount, likePercentRetweet: likePercentRetweet, likeCount: likeCount, likeRetweet: likeRetweet, hashtag: hashtag,
         tweets: tweets, tweetsFound: tweetsFound, advice: advice});
     });
 });
