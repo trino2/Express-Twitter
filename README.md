@@ -7,29 +7,34 @@
     ----------------------------------------------------------------- 
 
 
-Welcome to your Node.js project on Cloud9 IDE!
+Welcome to Heroku web app for serching Hashtag's in Twitter
 
-This chat example showcases how to use `socket.io` with a static `express` server.
+In index.js file user would type hashtag to serch twitter and data is
+sent to hashtagSerch.js file(/routes/hashtagSerch.js) where a Twitter
+API is called using Twit to get data from twitter (i.e. text, likes, 
+retweets, hashtag's). The information is processed then sent to jade 
+file were its displayed.
 
-## Running the server
+**************************************************************************
+npm Twit: 
+https://www.npmjs.com/package/twit
 
-1) Open `server.js` and start the app by clicking on the "Run" button in the top menu.
-
-2) Alternatively you can launch the app from the Terminal:
-
-    $ node server.js
-
-Once the server is running, open the project in the shape of 'https://projectname-username.c9users.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
-
+**************************************************************************
 API Web Resource Library:
 https://www.programmableweb.com
-**************************************************
-app url: https://twitter-critter.herokuapp.com/
 
-**************************************************
-to add changes to the app url
-git add .
-git commit -am "notes here"
-git push heroku master
+**************************************************************************
+Web cite url address: 
+https://twitter-critter.herokuapp.com/
 
-***************************************************
+**************************************************************************
+Add content to Web cite commands: 
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku master
+
+**************************************************************************
+Make a immage of git to github
+git push --mirror git@github.com:username/project.git
+
+**************************************************************************

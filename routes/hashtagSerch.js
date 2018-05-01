@@ -42,9 +42,9 @@ function twitterData(target, sendBackResponseToBrowser) {
         if (tweetsFound < 25 && tweetsFound != 0){
             advice = 'This is a great Hashtag to Play';
         }else if (tweetsFound > 25 && tweetsFound < 80) {
-            advice = "Its been used alot before, It could still be fun";
+            advice = "It has been used a lot before, It could still be fun!";
         }else {
-            advice = "Dont use that Hashtag, its been used to much!";
+            advice = "Dont use this Hashtag, its been used to much!";
         }
         // Gets just the likes and retweets from all the tweets found add total
         for (var key in tweets){
@@ -64,8 +64,8 @@ function twitterData(target, sendBackResponseToBrowser) {
 router.get('/', function(req, res, next) {
     var target = req.query.serchTarget;
     twitterData(target, function(likePercentCount, likePercentRetweet, likeCount, likeRetweet, hashtag, tweets, tweetsFound, advice){
-        res.render('hashtagSerch', {likePercentCount: likePercentCount, likePercentRetweet: likePercentRetweet, likeCount: likeCount, likeRetweet: likeRetweet, hashtag: hashtag,
-        tweets: tweets, tweetsFound: tweetsFound, advice: advice});
+        res.render('hashtagSerch', {likePercentCount: likePercentCount, likePercentRetweet: likePercentRetweet, likeCount: likeCount,
+        likeRetweet: likeRetweet, hashtag: hashtag, tweets: tweets, tweetsFound: tweetsFound, advice: advice});
     });
 });
 
